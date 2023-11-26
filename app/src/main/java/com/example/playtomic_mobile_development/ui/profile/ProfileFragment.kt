@@ -1,5 +1,6 @@
 package com.example.playtomic_mobile_development.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.FragmentProfileBinding
+import com.example.playtomic_mobile_development.model.User
+import com.example.playtomic_mobile_development.model.enum.Gender
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -40,33 +43,86 @@ class ProfileFragment : Fragment() {
 
         // Check of de gebruiker is ingelogd
         val currentUser = firebaseAuth.currentUser
+        var updatedUser = ""
+        currentUser?.let { user ->
+            val userId = user.uid
+
+            // Verwijzing naar de documentlocatie van de gebruiker in Firestore
+            val userDocRef = firestore.collection("users").document(userId)
+
+            // Haal de gegevens van de gebruiker op uit Firestore
+            userDocRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val userId = documentSnapshot.getString("id")
+                    val userUserName = documentSnapshot.getString("userName")
+                    val userFirstName = documentSnapshot.getString("firstName")
+                    val userLastName = documentSnapshot.getString("lastName")
+                    val userEmail = documentSnapshot.getString("email")
+                    val userPhoneNumber = documentSnapshot.getString("phoneNumber")
+                    val userGender = documentSnapshot.getString("gender")
+                    val userDateOfBirth = documentSnapshot.getString("dateOfBirth")
+                    val userDescription = documentSnapshot.getString("description")
+                    // Toon het e-mailadres in een TextView met id 'textViewEmail' (vervang met de daadwerkelijke id van je TextView)
+                    val updatedUser = User(
+                            // Gebruik de UID van de huidige gebruiker van Firebase Auth
+                            id = userId.toString(),
+                            userName = userUserName.toString(),
+                            firstName = userFirstName.toString(),
+                            lastName = userLastName.toString(),
+                            email = userEmail.toString(),
+                            phoneNumber = userPhoneNumber.toString(),
+                            gender = Gender.MALE,
+                            dateOfBirth = userDateOfBirth.toString(),
+                            description = userDescription.toString()
+                        )
+                    if (updatedUser != null) {
+                        if (userGender == Gender.MALE.toString()){
+                            updatedUser.gender= Gender.MALE;
+                        }
+                        else {
+                            updatedUser.gender= Gender.FEMALE
+                        };
+                    }
+                    val profileViewModel =
+                        ViewModelProvider(this).get(ProfileViewModel::class.java)
+
+                    val textViewUserName: TextView = binding.username
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewUserName.text = updatedUser.userName
+                    }
+                    val textViewFirstName: TextView = binding.firstname
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewFirstName.text = updatedUser.firstName
+                    }
+                    val textViewLastName: TextView = binding.lastname
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewLastName.text = updatedUser.lastName
+                    }
+                    val textViewPhoneNumber: TextView = binding.phonenumber
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewPhoneNumber.text = updatedUser.phoneNumber
+                    }
+                    val textViewGender: TextView = binding.gender
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewGender.text = updatedUser.gender.toString()
+                    }
+                    val textViewDateOfBirth: TextView = binding.dateOfBirth
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewDateOfBirth.text = updatedUser.dateOfBirth
+                    }
+
+                }
+            }.addOnFailureListener { exception ->
+                // Er is een fout opgetreden bij het ophalen van de gebruikersgegevens
+                // Behandel de fout hier
+            }
+        }
 
         val profileViewModel =
             ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val textView6: TextView = binding.username
-        profileViewModel.username.observe(viewLifecycleOwner) {
-            currentUser?.let { user ->
-                val userId = user.uid
-
-                // Verwijzing naar de documentlocatie van de gebruiker in Firestore
-                val userDocRef = firestore.collection("users").document(userId)
-
-                // Haal de gegevens van de gebruiker op uit Firestore
-                userDocRef.get().addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        val userEmail = documentSnapshot.getString("email")
-                        // Toon het e-mailadres in een TextView met id 'textViewEmail' (vervang met de daadwerkelijke id van je TextView)
-                        textView6.text = userEmail
-                    }
-                }.addOnFailureListener { exception ->
-                    // Er is een fout opgetreden bij het ophalen van de gebruikersgegevens
-                    // Behandel de fout hier
-                }
-            }
-        }
         val textViewMatches: TextView = binding.matches
         profileViewModel.matches.observe(viewLifecycleOwner) {
             textViewMatches.text = it
@@ -79,10 +135,16 @@ class ProfileFragment : Fragment() {
         profileViewModel.followed.observe(viewLifecycleOwner) {
             textViewFollowed.text = it
         }
-        val buttonEditAccount: TextView = binding.editAccount
+        val buttonEditAccount: Button = binding.editAccount
         profileViewModel.buttonEditAccount.observe(viewLifecycleOwner) {
             buttonEditAccount.text = it
+
+            buttonEditAccount.setOnClickListener {
+                val intent = Intent(requireContext(), EditProfileActivity::class.java)
+                startActivity(intent)
+            }
         }
+
         val buttonActivities: TextView = binding.activities
         profileViewModel.buttonActivities.observe(viewLifecycleOwner) {
             buttonActivities.text = it
@@ -112,6 +174,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.test5.observe(viewLifecycleOwner) {
             textView5.text = it
         }
+
         return root
     }
 

@@ -12,6 +12,31 @@ class ProfileViewModel : ViewModel() {
         value = "Username"
     }
     val textUsername: LiveData<String> = username
+
+    public val firstname = MutableLiveData<String>().apply {
+        value = "Firstname"
+    }
+    val textFirstname: LiveData<String> = firstname
+
+    public val lastname = MutableLiveData<String>().apply {
+        value = "Lastname"
+    }
+    val textLastname: LiveData<String> = lastname
+
+    public val phonenumber = MutableLiveData<String>().apply {
+        value = "Phonenumber"
+    }
+    val textPhonenumber: LiveData<String> = phonenumber
+
+    public val gender = MutableLiveData<String>().apply {
+        value = "Gender"
+    }
+    val textGender: LiveData<String> = gender
+
+    public val dateOfBirth = MutableLiveData<String>().apply {
+        value = "DateOfBirth"
+    }
+    val textDateOfBirth: LiveData<String> = dateOfBirth
     //--------------------------------- List Matches Followers Followed ----------------------------
     public val matches = MutableLiveData<String>().apply {
         value = "Matches"
