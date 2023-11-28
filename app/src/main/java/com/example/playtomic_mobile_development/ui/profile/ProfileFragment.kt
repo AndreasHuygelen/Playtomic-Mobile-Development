@@ -1,11 +1,15 @@
 package com.example.playtomic_mobile_development.ui.profile
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ViewSwitcher
@@ -17,6 +21,10 @@ import com.example.playtomic_mobile_development.model.User
 import com.example.playtomic_mobile_development.model.enum.Gender
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineStart
 
 class ProfileFragment : Fragment() {
 
@@ -31,6 +39,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
 
     override fun onCreateView(
 
@@ -40,9 +49,14 @@ class ProfileFragment : Fragment() {
     ): View {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        //val storage = Firebase.storage
 
         // Check of de gebruiker is ingelogd
         val currentUser = firebaseAuth.currentUser
+        /*var storageRef = storage.reference
+        val fileReference = storageRef.child("userProfilePic.jpg")
+        val gsReference = storage.getReferenceFromUrl("gs://bucket/images/stars.jpg")*/
+
         var updatedUser = ""
         currentUser?.let { user ->
             val userId = user.uid
@@ -85,7 +99,15 @@ class ProfileFragment : Fragment() {
                     }
                     val profileViewModel =
                         ViewModelProvider(this).get(ProfileViewModel::class.java)
+                    /*val imageProfilePic: ImageView = binding.profilePic
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        val decodedBytes: ByteArray = Base64.decode(gsReference.path,
+                            Base64.DEFAULT
+                        )
+                        val bitmap: Bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
 
+                        imageProfilePic.setImageBitmap(bitmap)
+                    }*/
                     val textViewUserName: TextView = binding.username
                     profileViewModel.username.observe(viewLifecycleOwner) {
                         textViewUserName.text = updatedUser.userName

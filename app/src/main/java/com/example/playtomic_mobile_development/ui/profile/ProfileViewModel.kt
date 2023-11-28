@@ -8,6 +8,11 @@ class ProfileViewModel : ViewModel() {
 
 
     //--------------------------------- User -------------------------------------------------------
+    public val profilePic = MutableLiveData<String>().apply {
+        value = "ProfilePic"
+    }
+    val imageProfilePic: LiveData<String> = profilePic
+
     public val username = MutableLiveData<String>().apply {
         value = "Username"
     }
