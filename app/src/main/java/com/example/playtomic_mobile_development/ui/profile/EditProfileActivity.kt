@@ -9,7 +9,11 @@ import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.SignInActivity
 import com.example.playtomic_mobile_development.databinding.ActivityEditProfileBinding
 import com.example.playtomic_mobile_development.model.User
+import com.example.playtomic_mobile_development.model.enum.BestHand
 import com.example.playtomic_mobile_development.model.enum.Gender
+import com.example.playtomic_mobile_development.model.enum.Position
+import com.example.playtomic_mobile_development.model.enum.TimeOfDay
+import com.example.playtomic_mobile_development.model.enum.TypeMatch
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -46,16 +50,24 @@ class EditProfileActivity : AppCompatActivity() {
                     binding.editTextFirstName.setText(user?.firstName)
                     binding.editTextLastName.setText(user?.lastName)
                     binding.editTextPhoneNumber.setText(user?.phoneNumber)
-                    binding.editTextGender.setText(user?.gender.toString())
                     binding.editTextDateOfBirth.setText(user?.dateOfBirth)
                     binding.editTextDescription.setText(user?.description)
+                    /*binding.spinnerGender.setSelection(user?.gender)
+                    binding.spinnerBestHand.setText(user?.phoneNumber)
+                    binding.spinnerPosition.setText(user?.dateOfBirth)
+                    binding.spinnerTypeMatch.setText(user?.description)
+                    binding.spinnerTimeOfDay.setText(user?.description)*/
                         // Voeg andere velden op dezelfde manier toe
                     binding.buttonSave.setOnClickListener {
                         val editedUserName = binding.editTextUserName.text.toString()
                         val editedFirstName = binding.editTextFirstName.text.toString()
                         val editedLastName = binding.editTextLastName.text.toString()
                         val editedPhoneNumber = binding.editTextPhoneNumber.text.toString()
-                        val editedGender = binding.editTextGender.text.toString()
+                        val selectedGender = binding.spinnerGender.selectedItem
+                        val selectedBestHand = binding.spinnerBestHand.selectedItem
+                        val selectedPosition = binding.spinnerPosition.selectedItem
+                        val selectedTypeMatch = binding.spinnerTypeMatch.selectedItem
+                        val selectedTimeOfDay = binding.spinnerTimeOfDay.selectedItem
                         val editedDateOfBirth = binding.editTextDateOfBirth.text.toString()
                         val editedDescription = binding.editTextDescription.text.toString()
                         // Haal andere bewerkte gegevens op op dezelfde manier
@@ -71,20 +83,78 @@ class EditProfileActivity : AppCompatActivity() {
                                 phoneNumber = editedPhoneNumber,
                                 gender = user.gender,
                                 dateOfBirth = editedDateOfBirth,
-                                description = editedDescription
+                                description = editedDescription,
+                                bestHand = user.bestHand,
+                                position = user.position,
+                                typeMatch = user.typeMatch,
+                                timeOfDay = user.timeOfDay
+
                             )
                         }
 
-                        if (updatedUser != null) {
-                            if (editedGender == Gender.MALE.toString()){
-                                updatedUser.gender= Gender.MALE;
-                            }
-                            else {
-                                updatedUser.gender= Gender.FEMALE
-                            };
-                        }
 
                         if (updatedUser != null) {
+                            if (selectedGender == "Male"){
+                                    updatedUser.gender = Gender.MALE
+                            }
+                            else{
+                                updatedUser.gender= Gender.FEMALE
+                            };
+
+                            if (selectedBestHand == "Right"){
+                                updatedUser.bestHand = BestHand.RIGHT
+                            }
+                            else if (selectedBestHand == "Left"){
+                                updatedUser.bestHand = BestHand.LEFT
+                            }
+                            else if (selectedBestHand == "Both"){
+                                updatedUser.bestHand = BestHand.BOTH
+                            }
+                            else{
+                                updatedUser.bestHand= BestHand.NO_CHOICE
+                            };
+
+                            if (selectedPosition == "Backhand"){
+                                updatedUser.position = Position.BACKHAND
+                            }
+                            else if (selectedPosition == "Forehand"){
+                                updatedUser.position = Position.FOREHAND
+                            }
+                            else if (selectedPosition == "Both"){
+                                updatedUser.position = Position.BOTH
+                            }
+                            else{
+                                updatedUser.position= Position.NO_CHOICE
+                            };
+
+                            if (selectedTimeOfDay == "Morning"){
+                                updatedUser.timeOfDay = TimeOfDay.MORNING
+                            }
+                            else if (selectedTimeOfDay == "Noon"){
+                                updatedUser.timeOfDay = TimeOfDay.NOON
+                            }
+                            else if (selectedTimeOfDay == "Evening"){
+                                updatedUser.timeOfDay = TimeOfDay.EVENING
+                            }
+                            else if (selectedTimeOfDay == "Hole day"){
+                                updatedUser.timeOfDay = TimeOfDay.HOLE_DAY
+                            }
+                            else{
+                                updatedUser.timeOfDay= TimeOfDay.NO_CHOICE
+                            };
+
+                            if (selectedTypeMatch == "Competitive"){
+                                updatedUser.typeMatch = TypeMatch.COMPETITIVE
+                            }
+                            else if (selectedTypeMatch == "Friendly"){
+                                updatedUser.typeMatch = TypeMatch.FRIENDLY
+                            }
+                            else if (selectedTypeMatch == "Both"){
+                                updatedUser.typeMatch = TypeMatch.BOTH
+                            }
+                            else{
+                                updatedUser.typeMatch= TypeMatch.NO_CHOICE
+                            };
                             userDocRef.set(updatedUser)
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show()

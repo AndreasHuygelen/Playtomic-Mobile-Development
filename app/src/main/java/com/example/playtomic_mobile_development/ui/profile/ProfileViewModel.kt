@@ -64,17 +64,6 @@ class ProfileViewModel : ViewModel() {
     }
     val textButtonEditAccount: LiveData<String> = buttonEditAccount
 
-    //--------------------------------- Button Posts -----------------------------------------------
-    public val buttonPosts = MutableLiveData<String>().apply {
-        value = "Posts"
-    }
-    val textButtonPosts: LiveData<String> = buttonPosts
-
-    //--------------------------------- Button Activities ------------------------------------------
-    public val buttonActivities = MutableLiveData<String>().apply {
-        value = "Activities"
-    }
-    val textButtonActivities: LiveData<String> = buttonActivities
     //--------------------------------- ViewSwitcher Activities ------------------------------------
     public val level = MutableLiveData<String>().apply {
         value = "Level progression"
@@ -86,19 +75,25 @@ class ProfileViewModel : ViewModel() {
     }
     val text2: LiveData<String> = test2
 
-    public val test3 = MutableLiveData<String>().apply {
-        value = "My groeps"
+    public val bestHand = MutableLiveData<String>().apply {
+        value = "Preferences of the player"
     }
-    val text3: LiveData<String> = test3
+    val textBestHand: LiveData<String> = bestHand
 
-    public val test4 = MutableLiveData<String>().apply {
-        value = "Ranking"
+    public val position = MutableLiveData<String>().apply {
+        value = "Preferences of the player"
     }
-    val text4: LiveData<String> = test4
+    val textPosition: LiveData<String> = position
 
-    //--------------------------------- ViewSwitcher Posts -----------------------------------------
-    public val test5 = MutableLiveData<String>().apply {
-        value = "This is a nice profile"
+    public val timeOfDay = MutableLiveData<String>().apply {
+        value = "Preferences of the player"
     }
-    val text5: LiveData<String> = test5
+    val textTimeOfDay: LiveData<String> = timeOfDay
+
+    public val typeMatch = MutableLiveData<String>().apply {
+        value = "Preferences of the player"
+    }
+    val textTypeMatch: LiveData<String> = typeMatch
+
+
 }

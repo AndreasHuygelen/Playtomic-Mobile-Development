@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="bestHand_options">
+        <item>No choice</item>
+        <item>Right</item>
+        <item>Left</item>
+        <item>Both</item>
+    </string-array>
+    <string-array name="position_options">
+        <item>No choice</item>
+        <item>Forehand</item>
+        <item>Backhand</item>
+        <item>Both</item>
+    </string-array>
+    <string-array name="timeOfDay_options">
+        <item>No choice</item>
+        <item>Morning</item>
+        <item>Noon</item>
+        <item>Evening</item>
+        <item>Hole day</item>
+    </string-array>
+    <string-array name="typeMatch_options">
+        <item>No choice</item>
+        <item>Competitive</item>
+        <item>Friendly</item>
+        <item>Both</item>
+    </string-array>
+</resources>

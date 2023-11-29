@@ -1,6 +1,11 @@
 package com.example.playtomic_mobile_development.model
 
+import com.example.playtomic_mobile_development.model.enum.BestHand
 import com.example.playtomic_mobile_development.model.enum.Gender
+import com.example.playtomic_mobile_development.model.enum.Position
+import com.example.playtomic_mobile_development.model.enum.TimeOfDay
+import com.example.playtomic_mobile_development.model.enum.TypeMatch
+import java.util.Collections
 
 data class User(
     var id: String,
@@ -11,7 +16,31 @@ data class User(
     var phoneNumber: String,
     var gender: Gender,
     var dateOfBirth: String,
-    var description: String
+    var description: String,
+    var amountOfMatches: Int = 0,
+    var followers: Int = 0,
+    var followed: List<Int> = Collections.emptyList(),
+    var bestHand: BestHand = BestHand.NO_CHOICE,
+    var position: Position = Position.NO_CHOICE,
+    var typeMatch: TypeMatch = TypeMatch.NO_CHOICE,
+    var timeOfDay: TimeOfDay = TimeOfDay.NO_CHOICE
 ){
-    constructor() : this("", "", "", "", "", "", Gender.MALE, "", "")
+    constructor() : this(
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        Gender.MALE,
+        "",
+        "",
+        0,
+        0,
+        Collections.emptyList(),
+        BestHand.NO_CHOICE,
+        Position.NO_CHOICE,
+        TypeMatch.NO_CHOICE,
+        TimeOfDay.NO_CHOICE
+    )
 }

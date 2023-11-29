@@ -34,17 +34,19 @@
         android:layout_height="wrap_content"
         android:hint="Last Name"
         app:layout_constraintBottom_toTopOf="@+id/editTextPhoneNumber" />
+
     <EditText
         android:id="@+id/editTextPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="PhoneNumber"
-        app:layout_constraintBottom_toTopOf="@+id/editTextGender" />
-    <EditText
-        android:id="@+id/editTextGender"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerGender" />
+
+    <Spinner
+        android:id="@+id/spinnerGender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Gender"
+        android:entries="@array/gender_options"
         app:layout_constraintBottom_toTopOf="@+id/editTextDateOfBirth" />
     <EditText
         android:id="@+id/editTextDateOfBirth"
@@ -60,6 +62,35 @@
         android:hint="Description"
         app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <Spinner
+        android:id="@+id/spinnerBestHand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/bestHand_options"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+
+    <Spinner
+        android:id="@+id/spinnerPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/position_options"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBestHand" />
+
+    <Spinner
+        android:id="@+id/spinnerTypeMatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/typeMatch_options"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPosition" />
+
+    <Spinner
+        android:id="@+id/spinnerTimeOfDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/timeOfDay_options"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTypeMatch" />
 
 
     <Button

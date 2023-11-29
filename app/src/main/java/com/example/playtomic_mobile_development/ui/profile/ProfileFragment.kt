@@ -18,7 +18,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.FragmentProfileBinding
 import com.example.playtomic_mobile_development.model.User
+import com.example.playtomic_mobile_development.model.enum.BestHand
 import com.example.playtomic_mobile_development.model.enum.Gender
+import com.example.playtomic_mobile_development.model.enum.Position
+import com.example.playtomic_mobile_development.model.enum.TimeOfDay
+import com.example.playtomic_mobile_development.model.enum.TypeMatch
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -76,6 +80,10 @@ class ProfileFragment : Fragment() {
                     val userGender = documentSnapshot.getString("gender")
                     val userDateOfBirth = documentSnapshot.getString("dateOfBirth")
                     val userDescription = documentSnapshot.getString("description")
+                    val userBestHand = documentSnapshot.getString("bestHand")
+                    val userPosition = documentSnapshot.getString("position")
+                    val userTypeMatch = documentSnapshot.getString("typeMatch")
+                    val userTimeOfDay = documentSnapshot.getString("timeOfDay")
                     // Toon het e-mailadres in een TextView met id 'textViewEmail' (vervang met de daadwerkelijke id van je TextView)
                     val updatedUser = User(
                             // Gebruik de UID van de huidige gebruiker van Firebase Auth
@@ -87,7 +95,11 @@ class ProfileFragment : Fragment() {
                             phoneNumber = userPhoneNumber.toString(),
                             gender = Gender.MALE,
                             dateOfBirth = userDateOfBirth.toString(),
-                            description = userDescription.toString()
+                            description = userDescription.toString(),
+                            bestHand = BestHand.NO_CHOICE,
+                            position = Position.NO_CHOICE,
+                            typeMatch = TypeMatch.NO_CHOICE,
+                            timeOfDay = TimeOfDay.NO_CHOICE
                         )
                     if (updatedUser != null) {
                         if (userGender == Gender.MALE.toString()){
@@ -95,6 +107,60 @@ class ProfileFragment : Fragment() {
                         }
                         else {
                             updatedUser.gender= Gender.FEMALE
+                        };
+                        if (userBestHand == BestHand.RIGHT.toString()){
+                            updatedUser.bestHand = BestHand.RIGHT
+                        }
+                        else if (userBestHand == BestHand.LEFT.toString()){
+                            updatedUser.bestHand = BestHand.LEFT
+                        }
+                        else if (userBestHand == BestHand.BOTH.toString()){
+                            updatedUser.bestHand = BestHand.BOTH
+                        }
+                        else{
+                            updatedUser.bestHand= BestHand.NO_CHOICE
+                        };
+
+                        if (userPosition == Position.BACKHAND.toString()){
+                            updatedUser.position = Position.BACKHAND
+                        }
+                        else if (userPosition == Position.FOREHAND.toString()){
+                            updatedUser.position = Position.FOREHAND
+                        }
+                        else if (userPosition == Position.BOTH.toString()){
+                            updatedUser.position = Position.BOTH
+                        }
+                        else{
+                            updatedUser.position= Position.NO_CHOICE
+                        };
+
+                        if (userTimeOfDay == TimeOfDay.MORNING.toString()){
+                            updatedUser.timeOfDay = TimeOfDay.MORNING
+                        }
+                        else if (userTimeOfDay == TimeOfDay.NOON.toString()){
+                            updatedUser.timeOfDay = TimeOfDay.NOON
+                        }
+                        else if (userTimeOfDay == TimeOfDay.EVENING.toString()){
+                            updatedUser.timeOfDay = TimeOfDay.EVENING
+                        }
+                        else if (userTimeOfDay == TimeOfDay.HOLE_DAY.toString()){
+                            updatedUser.timeOfDay = TimeOfDay.HOLE_DAY
+                        }
+                        else{
+                            updatedUser.timeOfDay= TimeOfDay.NO_CHOICE
+                        };
+
+                        if (userTypeMatch == TypeMatch.COMPETITIVE.toString()){
+                            updatedUser.typeMatch = TypeMatch.COMPETITIVE
+                        }
+                        else if (userTypeMatch == TypeMatch.FRIENDLY.toString()){
+                            updatedUser.typeMatch = TypeMatch.FRIENDLY
+                        }
+                        else if (userTypeMatch == TypeMatch.BOTH.toString()){
+                            updatedUser.typeMatch = TypeMatch.BOTH
+                        }
+                        else{
+                            updatedUser.typeMatch= TypeMatch.NO_CHOICE
                         };
                     }
                     val profileViewModel =
@@ -133,6 +199,26 @@ class ProfileFragment : Fragment() {
                         textViewDateOfBirth.text = updatedUser.dateOfBirth
                     }
 
+                    val textBestHand: TextView = binding.bestHand
+                    profileViewModel.bestHand.observe(viewLifecycleOwner) {
+                        textBestHand.text = "Best hand: " + updatedUser.bestHand.toString().lowercase()
+                    }
+
+                    val textPosition: TextView = binding.position
+                    profileViewModel.position.observe(viewLifecycleOwner) {
+                        textPosition.text = "Position: " + updatedUser.position.toString().lowercase()
+                    }
+
+                    val textTimeOfDay: TextView = binding.timeOfDay
+                    profileViewModel.timeOfDay.observe(viewLifecycleOwner) {
+                        textTimeOfDay.text = "Time of day: " + updatedUser.timeOfDay.toString().lowercase()
+                    }
+
+                    val textTypeMatch: TextView = binding.typeMatch
+                    profileViewModel.typeMatch.observe(viewLifecycleOwner) {
+                        textTypeMatch.text = "Type match: " + updatedUser.typeMatch.toString().lowercase()
+                    }
+
                 }
             }.addOnFailureListener { exception ->
                 // Er is een fout opgetreden bij het ophalen van de gebruikersgegevens
@@ -167,14 +253,6 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        val buttonActivities: TextView = binding.activities
-        profileViewModel.buttonActivities.observe(viewLifecycleOwner) {
-            buttonActivities.text = it
-        }
-        val buttonPosts: TextView = binding.posts
-        profileViewModel.buttonPosts.observe(viewLifecycleOwner) {
-            buttonPosts.text = it
-        }
 
         val textView1: TextView = binding.level
         profileViewModel.level.observe(viewLifecycleOwner) {
@@ -184,46 +262,11 @@ class ProfileFragment : Fragment() {
         profileViewModel.test2.observe(viewLifecycleOwner) {
             textView2.text = it
         }
-        val textView3: TextView = binding.test3
-        profileViewModel.test3.observe(viewLifecycleOwner) {
-            textView3.text = it
-        }
-        val textView4: TextView = binding.test4
-        profileViewModel.test4.observe(viewLifecycleOwner) {
-            textView4.text = it
-        }
-        val textView5: TextView = binding.test5
-        profileViewModel.test5.observe(viewLifecycleOwner) {
-            textView5.text = it
-        }
 
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        viewSwitch = view.findViewById(R.id.viewSwitch)
-
-        val buttonTest1: Button = view.findViewById(R.id.posts)
-        val buttonSwitch: Button = view.findViewById(R.id.activities)
-
-        buttonTest1.setOnClickListener {
-            if (!isButton1Clicked) {
-                viewSwitch.showPrevious()
-                isButton1Clicked = true
-                isButton2Clicked = false
-            }
-        }
-
-        buttonSwitch.setOnClickListener {
-            if (!isButton2Clicked) {
-                viewSwitch.showNext()
-                isButton2Clicked = true
-                isButton1Clicked = false
-            }
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
