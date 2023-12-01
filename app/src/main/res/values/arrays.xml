@@ -29,4 +29,44 @@
         <item>Friendly</item>
         <item>Both</item>
     </string-array>
+    <string-array name="typeMatch_Match_options">
+        <item>Competitive</item>
+        <item>Friendly</item>
+    </string-array>
+    <string-array name="gender_Match_options">
+        <item>All players</item>
+        <item>Mixed</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="time_Match_options">
+        <item>9:00</item>
+        <item>9:30</item>
+        <item>10:00</item>
+        <item>10:30</item>
+        <item>11:00</item>
+        <item>11:30</item>
+        <item>12:00</item>
+        <item>12:30</item>
+        <item>13:00</item>
+        <item>13:30</item>
+        <item>14:00</item>
+        <item>14:30</item>
+        <item>15:00</item>
+        <item>15:30</item>
+        <item>16:00</item>
+        <item>16:30</item>
+        <item>17:00</item>
+        <item>17:30</item>
+        <item>18:00</item>
+        <item>18:30</item>
+        <item>19:00</item>
+        <item>19:30</item>
+        <item>20:00</item>
+    </string-array>
+    <string-array name="date_Match_options">
+        <item>Today</item>
+        <item>Tomorrow</item>
+    </string-array>
+
 </resources>

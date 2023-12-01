@@ -4,5 +4,5 @@ data class Court (
     var id: String,
     var name: String,
     var location: String,
-
+    var city: String,
 )

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PlaytomicMobileDevelopment"
         tools:targetApi="31">
         <activity
+            android:name=".ui.play.CreateMatchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.CreateProfileActivity"
             android:exported="false" />
         <activity

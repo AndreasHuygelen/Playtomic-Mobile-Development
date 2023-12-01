@@ -33,7 +33,7 @@ class CreateProfileActivity : AppCompatActivity() {
             val lastName = binding.editTextLastName.text.toString()
             val email = intent.getStringExtra("EMAIL")
             val phoneNumber = binding.editTextPhoneNumber.text.toString()
-            val gender = binding.editTextGender.text.toString()
+            val gender = binding.spinnerGender.selectedItem
             val dateOfBirth = binding.editTextDateOfBirth.text.toString()
             val description = binding.editTextDescription.text.toString()
 

@@ -31,12 +31,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="PhoneNumber"
-        app:layout_constraintBottom_toTopOf="@+id/editTextGender" />
-    <EditText
-        android:id="@+id/editTextGender"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerGender" />
+
+    <Spinner
+        android:id="@+id/spinnerGender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Gender"
+        android:entries="@array/gender_options"
         app:layout_constraintBottom_toTopOf="@+id/editTextDateOfBirth" />
     <EditText
         android:id="@+id/editTextDateOfBirth"
