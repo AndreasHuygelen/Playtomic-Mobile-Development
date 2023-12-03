@@ -4,7 +4,7 @@ import com.example.playtomic_mobile_development.model.enum.GenderMatch
 import com.example.playtomic_mobile_development.model.enum.TypeMatch
 
 data class Match (
-    var id: String,
+    var id: String? = null,
     var date: String,
     var players: List<String>,
     var court: String,
