@@ -26,7 +26,6 @@ class CreateProfileActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         binding.buttonCreate.setOnClickListener {
-            // Haal de gegevens uit de invoervelden
             val id = intent.getStringExtra("USER_ID")
             val userName = binding.editTextUserName.text.toString()
             val firstName = binding.editTextFirstName.text.toString()
@@ -66,7 +65,6 @@ class CreateProfileActivity : AppCompatActivity() {
                 };
             }
 
-            // Voeg de nieuwe gebruiker toe aan Firestore
             if (user != null) {
                 if (id != null) {
                     firestore.collection("users")

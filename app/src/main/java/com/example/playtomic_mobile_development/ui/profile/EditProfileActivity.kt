@@ -44,20 +44,12 @@ class EditProfileActivity : AppCompatActivity() {
             userDocRef.get().addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
                     val user = documentSnapshot.toObject(User::class.java)
-                    // Voer hier een breakpoint in om te controleren of 'user' null is of correcte waarden heeft
-                    // Controleer of de waarden van 'user' juist worden opgehaald van Firestore
                     binding.editTextUserName.setText(user?.userName)
                     binding.editTextFirstName.setText(user?.firstName)
                     binding.editTextLastName.setText(user?.lastName)
                     binding.editTextPhoneNumber.setText(user?.phoneNumber)
                     binding.editTextDateOfBirth.setText(user?.dateOfBirth)
                     binding.editTextDescription.setText(user?.description)
-                    /*binding.spinnerGender.setSelection(user?.gender)
-                    binding.spinnerBestHand.setText(user?.phoneNumber)
-                    binding.spinnerPosition.setText(user?.dateOfBirth)
-                    binding.spinnerTypeMatch.setText(user?.description)
-                    binding.spinnerTimeOfDay.setText(user?.description)*/
-                        // Voeg andere velden op dezelfde manier toe
                     binding.buttonSave.setOnClickListener {
                         val editedUserName = binding.editTextUserName.text.toString()
                         val editedFirstName = binding.editTextFirstName.text.toString()
@@ -70,11 +62,9 @@ class EditProfileActivity : AppCompatActivity() {
                         val selectedTimeOfDay = binding.spinnerTimeOfDay.selectedItem
                         val editedDateOfBirth = binding.editTextDateOfBirth.text.toString()
                         val editedDescription = binding.editTextDescription.text.toString()
-                        // Haal andere bewerkte gegevens op op dezelfde manier
 
                         val updatedUser = user?.let { user ->
                             User(
-                                // Gebruik de UID van de huidige gebruiker van Firebase Auth
                                 id = user.id,
                                 userName = editedUserName,
                                 firstName = editedFirstName,
@@ -170,7 +160,6 @@ class EditProfileActivity : AppCompatActivity() {
                     }
                 }
             }.addOnFailureListener { exception ->
-                // Behandel de fout bij het ophalen van de gegevens
                 Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
             }
 

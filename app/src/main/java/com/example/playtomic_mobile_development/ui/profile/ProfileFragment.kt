@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,27 +24,25 @@ import com.example.playtomic_mobile_development.model.enum.Gender
 import com.example.playtomic_mobile_development.model.enum.Position
 import com.example.playtomic_mobile_development.model.enum.TimeOfDay
 import com.example.playtomic_mobile_development.model.enum.TypeMatch
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineStart
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var viewSwitch: ViewSwitcher
-    private var isButton1Clicked = true
-    private var isButton2Clicked = false
+    private lateinit var storageReference: StorageReference
 
     private var _binding: FragmentProfileBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var storage: FirebaseStorage
 
     override fun onCreateView(
 
@@ -53,22 +52,15 @@ class ProfileFragment : Fragment() {
     ): View {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-        //val storage = Firebase.storage
+        storageReference = Firebase.storage.reference
 
-        // Check of de gebruiker is ingelogd
         val currentUser = firebaseAuth.currentUser
-        /*var storageRef = storage.reference
-        val fileReference = storageRef.child("userProfilePic.jpg")
-        val gsReference = storage.getReferenceFromUrl("gs://bucket/images/stars.jpg")*/
 
-        var updatedUser = ""
         currentUser?.let { user ->
             val userId = user.uid
 
-            // Verwijzing naar de documentlocatie van de gebruiker in Firestore
             val userDocRef = firestore.collection("users").document(userId)
 
-            // Haal de gegevens van de gebruiker op uit Firestore
             userDocRef.get().addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
                     val userId = documentSnapshot.getString("id")
@@ -84,9 +76,7 @@ class ProfileFragment : Fragment() {
                     val userPosition = documentSnapshot.getString("position")
                     val userTypeMatch = documentSnapshot.getString("typeMatch")
                     val userTimeOfDay = documentSnapshot.getString("timeOfDay")
-                    // Toon het e-mailadres in een TextView met id 'textViewEmail' (vervang met de daadwerkelijke id van je TextView)
                     val updatedUser = User(
-                            // Gebruik de UID van de huidige gebruiker van Firebase Auth
                             id = userId.toString(),
                             userName = userUserName.toString(),
                             firstName = userFirstName.toString(),
@@ -165,15 +155,6 @@ class ProfileFragment : Fragment() {
                     }
                     val profileViewModel =
                         ViewModelProvider(this).get(ProfileViewModel::class.java)
-                    /*val imageProfilePic: ImageView = binding.profilePic
-                    profileViewModel.username.observe(viewLifecycleOwner) {
-                        val decodedBytes: ByteArray = Base64.decode(gsReference.path,
-                            Base64.DEFAULT
-                        )
-                        val bitmap: Bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-
-                        imageProfilePic.setImageBitmap(bitmap)
-                    }*/
                     val textViewUserName: TextView = binding.username
                     profileViewModel.username.observe(viewLifecycleOwner) {
                         textViewUserName.text = updatedUser.userName
@@ -219,6 +200,42 @@ class ProfileFragment : Fragment() {
                         textTypeMatch.text = "Type match: " + updatedUser.typeMatch.toString().lowercase()
                     }
 
+                    val textViewMatches: TextView = binding.matches
+                    profileViewModel.matches.observe(viewLifecycleOwner) {
+                        textViewMatches.text = it + "\n" + updatedUser.amountOfMatches
+                    }
+                    val textViewFollowers: TextView = binding.followers
+                    profileViewModel.followers.observe(viewLifecycleOwner) {
+                        textViewFollowers.text = it + "\n" + updatedUser.followers
+                    }
+                    val textViewFollowed: TextView = binding.followed
+                    profileViewModel.followed.observe(viewLifecycleOwner) {
+                        textViewFollowed.text = it + "\n" + updatedUser.followed.count()
+                    }
+
+
+                    var imageReference = storageReference.child("userProfilePic.jpg") // Standaard referentie naar een standaardafbeelding
+
+                    val specificImageRef = storageReference.child("${updatedUser.id}.profile.png")
+                    val storage =storageReference.child("${updatedUser.id}.profile.png")
+                    storage.metadata
+                        .addOnSuccessListener { metadata ->
+                            specificImageRef.downloadUrl.addOnSuccessListener { uri ->
+                                Picasso.get().load(uri.toString()).into(binding.profilePic)
+                            }.addOnFailureListener { exception ->
+                                Log.e("firebase", exception.toString())
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            imageReference.downloadUrl.addOnSuccessListener { uri ->
+                                Picasso.get().load(uri.toString()).into(binding.profilePic)
+                            }.addOnFailureListener { exception ->
+                                Log.e("firebase", exception.toString())
+
+                            }
+                        }
+
+
                 }
             }.addOnFailureListener { exception ->
                 // Er is een fout opgetreden bij het ophalen van de gebruikersgegevens
@@ -226,23 +243,12 @@ class ProfileFragment : Fragment() {
             }
         }
 
+
         val profileViewModel =
             ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val textViewMatches: TextView = binding.matches
-        profileViewModel.matches.observe(viewLifecycleOwner) {
-            textViewMatches.text = it
-        }
-        val textViewFollowers: TextView = binding.followers
-        profileViewModel.followers.observe(viewLifecycleOwner) {
-            textViewFollowers.text = it
-        }
-        val textViewFollowed: TextView = binding.followed
-        profileViewModel.followed.observe(viewLifecycleOwner) {
-            textViewFollowed.text = it
-        }
         val buttonEditAccount: Button = binding.editAccount
         profileViewModel.buttonEditAccount.observe(viewLifecycleOwner) {
             buttonEditAccount.text = it

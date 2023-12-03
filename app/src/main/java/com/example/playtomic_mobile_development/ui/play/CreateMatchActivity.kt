@@ -37,7 +37,6 @@ class CreateMatchActivity : AppCompatActivity() {
         }
 
         binding.buttonCreate.setOnClickListener {
-            // Haal de gegevens uit de invoervelden
             val typeMatch = binding.spinnerTypeMatch.selectedItem
             val genderMatch = binding.spinnerGenderMatch.selectedItem
             val dateMatch = binding.spinnerDateMatch.selectedItem
