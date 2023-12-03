@@ -74,6 +74,8 @@ class CreateProfileActivity : AppCompatActivity() {
                             Toast.makeText(this, "User made", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this, SignInActivity::class.java)
                             startActivity(intent)
+
+
                         }
                         .addOnFailureListener { exception ->
                             Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()

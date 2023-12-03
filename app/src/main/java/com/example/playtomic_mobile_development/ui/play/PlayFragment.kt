@@ -28,10 +28,6 @@ class PlayFragment : Fragment() {
 
         _binding = FragmentPlayBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.buttonCreateMatch.setOnClickListener {
-            val intent = Intent(requireContext(), CreateMatchActivity::class.java)
-            startActivity(intent)
-        }
 
 
         val textView: TextView = binding.textPlay

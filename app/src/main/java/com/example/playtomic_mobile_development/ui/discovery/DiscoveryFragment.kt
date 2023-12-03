@@ -1,11 +1,13 @@
 package com.example.playtomic_mobile_development.ui.discovery
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomic_mobile_development.databinding.FragmentDiscoveryBinding
 import com.example.playtomic_mobile_development.model.Court
+import com.example.playtomic_mobile_development.ui.play.CreateMatchActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -70,7 +73,16 @@ class DiscoveryFragment : Fragment() {
                         Picasso.get().load(uri).resize(200, 200).into(imageView)
 
                         linearLayout.addView(imageView)
+                        val button = Button(requireContext())
+                        button.text = "Create Match"
+                        button.setOnClickListener {
+                            val intent = Intent(requireContext(), CreateMatchActivity::class.java)
+                            intent.putExtra("court", courtId)
+                            startActivity(intent)
+                        }
 
+                        // Voeg de knop toe aan het LinearLayout
+                        linearLayout.addView(button)
                         binding.courtsLayout.addView(linearLayout)
                     }.addOnFailureListener { exception ->
                         Log.e("CourtsFragment", "Error loading image for court $courtId", exception)

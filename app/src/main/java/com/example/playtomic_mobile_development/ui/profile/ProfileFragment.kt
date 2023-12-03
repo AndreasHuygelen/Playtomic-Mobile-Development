@@ -76,6 +76,8 @@ class ProfileFragment : Fragment() {
                     val userPosition = documentSnapshot.getString("position")
                     val userTypeMatch = documentSnapshot.getString("typeMatch")
                     val userTimeOfDay = documentSnapshot.getString("timeOfDay")
+                    val userMatches = documentSnapshot.get("amountOfMatches")
+
                     val updatedUser = User(
                             id = userId.toString(),
                             userName = userUserName.toString(),
@@ -89,8 +91,16 @@ class ProfileFragment : Fragment() {
                             bestHand = BestHand.NO_CHOICE,
                             position = Position.NO_CHOICE,
                             typeMatch = TypeMatch.NO_CHOICE,
-                            timeOfDay = TimeOfDay.NO_CHOICE
+                            timeOfDay = TimeOfDay.NO_CHOICE,
+
                         )
+                    if (userMatches != null) {
+                        val matches = userMatches
+                        if (matches != null) {
+                            updatedUser.amountOfMatches = matches as Long
+                        }
+                    }
+
                     if (updatedUser != null) {
                         if (userGender == Gender.MALE.toString()){
                             updatedUser.gender= Gender.MALE;
@@ -202,11 +212,11 @@ class ProfileFragment : Fragment() {
 
                     val textViewMatches: TextView = binding.matches
                     profileViewModel.matches.observe(viewLifecycleOwner) {
-                        textViewMatches.text = it + "\n" + updatedUser.amountOfMatches
+                        textViewMatches.text = it + "\n" + updatedUser.amountOfMatches.toString()
                     }
                     val textViewFollowers: TextView = binding.followers
                     profileViewModel.followers.observe(viewLifecycleOwner) {
-                        textViewFollowers.text = it + "\n" + updatedUser.followers
+                        textViewFollowers.text = it + "\n" + updatedUser.followers.toString()
                     }
                     val textViewFollowed: TextView = binding.followed
                     profileViewModel.followed.observe(viewLifecycleOwner) {

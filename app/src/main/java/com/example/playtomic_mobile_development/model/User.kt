@@ -17,7 +17,7 @@ data class User(
     var gender: Gender,
     var dateOfBirth: String,
     var description: String,
-    var amountOfMatches: Int = 0,
+    var amountOfMatches: Long = 0,
     var followers: Int = 0,
     var followed: List<Int> = Collections.emptyList(),
     var bestHand: BestHand = BestHand.NO_CHOICE,
