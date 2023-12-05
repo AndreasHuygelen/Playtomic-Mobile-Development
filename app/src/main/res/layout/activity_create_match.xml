@@ -11,40 +11,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Type of match"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="6dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
 
     <Spinner
         android:id="@+id/spinnerTypeMatch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:entries="@array/typeMatch_Match_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp"  />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gender"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerDateMatch"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
 
     <Spinner
         android:id="@+id/spinnerGenderMatch"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/gender_Match_options"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="1dp" />
-
+        tools:layout_editor_absoluteX="6dp"  />
 
 
     <TextView
@@ -52,30 +55,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerDateMatch"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="1dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp"  />
 
     <Spinner
         android:id="@+id/spinnerDateMatch"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/date_Match_options"
         app:layout_constraintBottom_toTopOf="@+id/buttonCreate"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="1dp" />
+        tools:layout_editor_absoluteX="6dp"  />
 
     <Spinner
         android:id="@+id/spinnerTimeMatch"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/time_Match_options"
         app:layout_constraintTop_toBottomOf="@+id/spinnerDateMatch"
-        tools:layout_editor_absoluteX="1dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp"  />
 
     <Button
         android:id="@+id/buttonCreate"
