@@ -10,164 +10,224 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/theme_dark_blue"
         android:text="Edit profile"
+        android:textColor="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
         android:textSize="32dp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UserName"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextUserName"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp" />
-
-    <EditText
-        android:id="@+id/editTextUserName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        app:layout_constraintBottom_toTopOf="@+id/firstName" />
-
-    <TextView
-        android:id="@+id/firstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FirstName"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextFirstName"
-        tools:ignore="MissingConstraints"
-
-        tools:layout_editor_absoluteX="6dp" />
-
-    <EditText
-        android:id="@+id/editTextFirstName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="First Name"
-        app:layout_constraintBottom_toTopOf="@+id/lastName" />
-
-    <TextView
-        android:id="@+id/lastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LastName"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextLastName"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp" />
-
-    <EditText
-        android:id="@+id/editTextLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Last Name"
-        app:layout_constraintBottom_toTopOf="@+id/phoneNumber" />
-
-    <TextView
-        android:id="@+id/phoneNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PhoneNumber"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPhoneNumber"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp" />
-
-    <EditText
-        android:id="@+id/editTextPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="PhoneNumber"
-        app:layout_constraintBottom_toTopOf="@+id/gender" />
-
-    <TextView
-        android:id="@+id/gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gender"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerGender"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp" />
-
-    <Spinner
-        android:id="@+id/spinnerGender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/gender_options"
-        app:layout_constraintBottom_toTopOf="@+id/dateOfBirth" />
-
-    <TextView
-        android:id="@+id/dateOfBirth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date of Birth"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDateOfBirth"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp" />
-
-    <EditText
-        android:id="@+id/editTextDateOfBirth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="DateOfBirth"
-        app:layout_constraintBottom_toTopOf="@+id/description" />
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="6dp" />
-    <EditText
-        android:id="@+id/editTextDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonSave"
-        android:layout_marginBottom="100dp" />
-
-    <Spinner
-        android:id="@+id/spinnerBestHand"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/bestHand_options"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
-
-    <Spinner
-        android:id="@+id/spinnerPosition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/position_options"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerBestHand" />
-
-    <Spinner
-        android:id="@+id/spinnerTypeMatch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/typeMatch_options"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerPosition" />
-
-    <Spinner
-        android:id="@+id/spinnerTimeOfDay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/timeOfDay_options"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTypeMatch" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UserName"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextUserName"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <EditText
+                android:id="@+id/editTextUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                app:layout_constraintBottom_toTopOf="@+id/firstName" />
+
+            <TextView
+                android:id="@+id/firstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FirstName"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextFirstName"
+                tools:ignore="MissingConstraints"
+
+                tools:layout_editor_absoluteX="6dp" />
+
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                app:layout_constraintBottom_toTopOf="@+id/lastName" />
+
+            <TextView
+                android:id="@+id/lastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LastName"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextLastName"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                app:layout_constraintBottom_toTopOf="@+id/phoneNumber" />
+
+            <TextView
+                android:id="@+id/phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PhoneNumber"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextPhoneNumber"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <EditText
+                android:id="@+id/editTextPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PhoneNumber"
+                app:layout_constraintBottom_toTopOf="@+id/gender" />
+
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/spinnerGender"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <Spinner
+                android:id="@+id/spinnerGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/gender_options"
+                app:layout_constraintBottom_toTopOf="@+id/dateOfBirth" />
+
+            <TextView
+                android:id="@+id/dateOfBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextDateOfBirth"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <EditText
+                android:id="@+id/editTextDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="DateOfBirth"
+                app:layout_constraintBottom_toTopOf="@+id/description" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                app:layout_constraintBottom_toTopOf="@+id/buttonSave" />
+
+            <TextView
+                android:id="@+id/bestHand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BestHand"
+                android:textSize="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <Spinner
+                android:id="@+id/spinnerBestHand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/bestHand_options"
+                app:layout_constraintTop_toBottomOf="@+id/bestHand" />
+
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Position"
+                android:textSize="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerBestHand"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <Spinner
+                android:id="@+id/spinnerPosition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/position_options"
+                app:layout_constraintTop_toBottomOf="@+id/position" />
+
+            <TextView
+                android:id="@+id/typeMatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type Match"
+                android:textSize="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerPosition"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <Spinner
+                android:id="@+id/spinnerTypeMatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/typeMatch_options"
+                app:layout_constraintTop_toBottomOf="@+id/typeMatch" />
+
+            <TextView
+                android:id="@+id/timeOfDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Of Day"
+                android:textSize="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerTypeMatch"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="6dp" />
+
+            <Spinner
+                android:id="@+id/spinnerTimeOfDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/timeOfDay_options"
+                app:layout_constraintTop_toBottomOf="@+id/timeOfDay" />
+
+        </LinearLayout>
+    </ScrollView>
     <Button
         android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextFirstName"
         android:layout_alignParentEnd="true"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"

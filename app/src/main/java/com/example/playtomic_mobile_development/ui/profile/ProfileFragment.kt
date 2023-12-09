@@ -108,11 +108,11 @@ class ProfileFragment : Fragment() {
                         else {
                             updatedUser.gender= Gender.FEMALE
                         };
-                        if (userBestHand == BestHand.RIGHT.toString()){
-                            updatedUser.bestHand = BestHand.RIGHT
+                        if (userBestHand == BestHand.BACKHAND.toString()){
+                            updatedUser.bestHand = BestHand.BACKHAND
                         }
-                        else if (userBestHand == BestHand.LEFT.toString()){
-                            updatedUser.bestHand = BestHand.LEFT
+                        else if (userBestHand == BestHand.FOREHAND.toString()){
+                            updatedUser.bestHand = BestHand.FOREHAND
                         }
                         else if (userBestHand == BestHand.BOTH.toString()){
                             updatedUser.bestHand = BestHand.BOTH
@@ -121,11 +121,11 @@ class ProfileFragment : Fragment() {
                             updatedUser.bestHand= BestHand.NO_CHOICE
                         };
 
-                        if (userPosition == Position.BACKHAND.toString()){
-                            updatedUser.position = Position.BACKHAND
+                        if (userPosition == Position.RIGHT.toString()){
+                            updatedUser.position = Position.RIGHT
                         }
-                        else if (userPosition == Position.FOREHAND.toString()){
-                            updatedUser.position = Position.FOREHAND
+                        else if (userPosition == Position.LEFT.toString()){
+                            updatedUser.position = Position.LEFT
                         }
                         else if (userPosition == Position.BOTH.toString()){
                             updatedUser.position = Position.BOTH

@@ -50,6 +50,32 @@ class EditProfileActivity : AppCompatActivity() {
                     binding.editTextPhoneNumber.setText(user?.phoneNumber)
                     binding.editTextDateOfBirth.setText(user?.dateOfBirth)
                     binding.editTextDescription.setText(user?.description)
+
+                    val bestHandValues = BestHand.values()
+                    val bestHandIndex = bestHandValues.indexOfFirst { it.name == user?.bestHand?.name }
+                    binding.spinnerBestHand.setSelection(bestHandIndex)
+
+                    val positionValues = Position.values()
+                    val positionIndex = positionValues.indexOfFirst { it.name == user?.position?.name }
+                    binding.spinnerPosition.setSelection(positionIndex)
+
+
+                    val typeMatchValues = TypeMatch.values()
+                    val typeMatchIndex = typeMatchValues.indexOfFirst { it.name == user?.typeMatch?.name }
+                    binding.spinnerTypeMatch.setSelection(typeMatchIndex)
+
+
+                    val timeOfDayValues = TimeOfDay.values()
+                    val timeOfDayIndex = timeOfDayValues.indexOfFirst { it.name == user?.timeOfDay?.name }
+                    binding.spinnerTimeOfDay.setSelection(timeOfDayIndex)
+
+
+                    val genderValues = Gender.values()
+                    val genderIndex = genderValues.indexOfFirst { it.name == user?.gender?.name }
+                    binding.spinnerGender.setSelection(genderIndex)
+
+
+
                     binding.buttonSave.setOnClickListener {
                         val editedUserName = binding.editTextUserName.text.toString()
                         val editedFirstName = binding.editTextFirstName.text.toString()
@@ -91,11 +117,11 @@ class EditProfileActivity : AppCompatActivity() {
                                 updatedUser.gender= Gender.FEMALE
                             };
 
-                            if (selectedBestHand == "Right"){
-                                updatedUser.bestHand = BestHand.RIGHT
+                            if (selectedBestHand == "Forehand"){
+                                updatedUser.bestHand = BestHand.FOREHAND
                             }
-                            else if (selectedBestHand == "Left"){
-                                updatedUser.bestHand = BestHand.LEFT
+                            else if (selectedBestHand == "Backhand"){
+                                updatedUser.bestHand = BestHand.BACKHAND
                             }
                             else if (selectedBestHand == "Both"){
                                 updatedUser.bestHand = BestHand.BOTH
@@ -104,11 +130,11 @@ class EditProfileActivity : AppCompatActivity() {
                                 updatedUser.bestHand= BestHand.NO_CHOICE
                             };
 
-                            if (selectedPosition == "Backhand"){
-                                updatedUser.position = Position.BACKHAND
+                            if (selectedPosition == "Right"){
+                                updatedUser.position = Position.RIGHT
                             }
-                            else if (selectedPosition == "Forehand"){
-                                updatedUser.position = Position.FOREHAND
+                            else if (selectedPosition == "Left"){
+                                updatedUser.position = Position.LEFT
                             }
                             else if (selectedPosition == "Both"){
                                 updatedUser.position = Position.BOTH

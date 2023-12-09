@@ -6,9 +6,9 @@
     </string-array>
     <string-array name="bestHand_options">
         <item>No choice</item>
+        <item>Both</item>
         <item>Forehand</item>
         <item>Backhand</item>
-        <item>Both</item>
     </string-array>
     <string-array name="position_options">
         <item>No choice</item>
