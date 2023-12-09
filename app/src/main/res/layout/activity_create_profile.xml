@@ -6,53 +6,125 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.CreateProfileActivity">
 
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UserName"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextUserName"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
+
     <EditText
         android:id="@+id/editTextUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
-        app:layout_constraintBottom_toTopOf="@+id/editTextFirstName" />
+        app:layout_constraintBottom_toTopOf="@+id/firstName" />
+
+    <TextView
+        android:id="@+id/firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FirstName"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextFirstName"
+        tools:ignore="MissingConstraints"
+
+        tools:layout_editor_absoluteX="6dp" />
 
     <EditText
         android:id="@+id/editTextFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="First Name"
-        app:layout_constraintBottom_toTopOf="@+id/editTextLastName" />
+        app:layout_constraintBottom_toTopOf="@+id/lastName" />
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LastName"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextLastName"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
 
     <EditText
         android:id="@+id/editTextLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Last Name"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPhoneNumber" />
+        app:layout_constraintBottom_toTopOf="@+id/phoneNumber" />
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PhoneNumber"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhoneNumber"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
+
     <EditText
         android:id="@+id/editTextPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="PhoneNumber"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerGender" />
+        app:layout_constraintBottom_toTopOf="@+id/gender" />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerGender"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
 
     <Spinner
         android:id="@+id/spinnerGender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/gender_options"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDateOfBirth" />
+        app:layout_constraintBottom_toTopOf="@+id/dateOfBirth" />
+
+    <TextView
+        android:id="@+id/dateOfBirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of Birth"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDateOfBirth"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
+
     <EditText
         android:id="@+id/editTextDateOfBirth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="DateOfBirth"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDescription" />
+        app:layout_constraintBottom_toTopOf="@+id/description" />
 
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp" />
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Description"
         app:layout_constraintBottom_toTopOf="@+id/buttonCreate"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="100dp" />
 
     <!-- Voeg andere velden toe voor de gebruiker om in te vullen -->
 

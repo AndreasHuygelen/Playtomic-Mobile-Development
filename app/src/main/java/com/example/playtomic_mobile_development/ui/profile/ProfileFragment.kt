@@ -270,10 +270,7 @@ class ProfileFragment : Fragment() {
         }
 
 
-        val textView1: TextView = binding.level
-        profileViewModel.level.observe(viewLifecycleOwner) {
-            textView1.text = it
-        }
+
         val textView2: TextView = binding.test2
         profileViewModel.test2.observe(viewLifecycleOwner) {
             textView2.text = it

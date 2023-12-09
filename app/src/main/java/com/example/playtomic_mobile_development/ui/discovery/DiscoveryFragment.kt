@@ -62,7 +62,7 @@ class DiscoveryFragment : Fragment() {
 
                     val textView = TextView(requireContext())
                     textView.text = "Name: $courtName \n Address: $courtLocation \n City: $courtCity"
-                    textView.textSize = 16f
+                    textView.textSize = 20f
 
                     linearLayout.addView(textView)
 

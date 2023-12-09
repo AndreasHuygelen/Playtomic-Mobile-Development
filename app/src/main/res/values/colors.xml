@@ -12,4 +12,10 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow">#FFC801</color>
+    <!-- theme colors -->
+    <color name="theme_red">#D90429</color>
+    <color name="theme_light_red">#EF233C</color>
+    <color name="theme_white">#EDF2F4</color>
+    <color name="theme_blue">#8D99AE</color>
+    <color name="theme_dark_blue">#2B2D42</color>
 </resources>

@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <!-- Je kunt hier eventueel andere views toevoegen of dit naar wens aanpassen -->
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
