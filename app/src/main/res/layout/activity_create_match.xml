@@ -66,7 +66,6 @@
         android:id="@+id/spinnerDateMatch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/date_Match_options"
         app:layout_constraintBottom_toTopOf="@+id/buttonCreate"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
