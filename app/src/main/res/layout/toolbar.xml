@@ -6,12 +6,9 @@
     android:background="@color/theme_dark_blue"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:elevation="8dp"
-    app:popupTheme="@style/ToolbarStyle">
-    <Button
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="logout"/>
+    app:popupTheme="@style/ToolbarStyle"
+    app:menu="@menu/top_nav_menu">
+
 
 
 </androidx.appcompat.widget.Toolbar>

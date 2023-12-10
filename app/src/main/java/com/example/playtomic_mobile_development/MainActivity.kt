@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.example.playtomic_mobile_development.databinding.ToolbarBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.xml_toolbar)) // Hierbij ga ik ervan uit dat je een Toolbar met de id 'toolbar' hebt in je layout
 
+
+        auth = FirebaseAuth.getInstance()
 
 
         val navView: BottomNavigationView = binding.navView
@@ -41,16 +45,23 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.top_nav_menu,menu)
+        return true
+    }
 
-    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        binding.btnSignout.setOnClickListener {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        R.id.signout
+        item.itemId
+        if (R.id.signout == item.itemId){
             auth.signOut()
             startActivity(Intent(this, SignInActivity::class.java))
             finish()
         }
-        val inflater = menuInflater
-        inflater.inflate(R.menu.top_nav_menu,menu)
-        return true
-    }*/
+        return super.onOptionsItemSelected(item)
+    }
 
 }
