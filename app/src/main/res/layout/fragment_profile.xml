@@ -121,6 +121,16 @@
                 </LinearLayout>
 
             </LinearLayout>
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="textview"
+            android:textSize="20sp"
+            app:layout_constraintHorizontal_bias="0.531" />
 
             <LinearLayout
                 android:id="@+id/list"
@@ -140,7 +150,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textAlignment="center"
                     android:text="textview"
+                    android:background="@drawable/border_left"
                     android:textSize="20sp" />
 
                 <TextView
@@ -148,6 +163,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textAlignment="center"
+                    android:background="@drawable/border_left"
                     android:text="textview"
                     android:textSize="20sp" />
 
@@ -156,6 +176,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textAlignment="center"
                     android:text="textview"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -190,7 +214,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="textview"
-                    android:textAlignment="center"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

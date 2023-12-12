@@ -3,6 +3,7 @@ package com.example.playtomic_mobile_development.ui.play
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.marginBottom
+import androidx.core.view.marginLeft
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.playtomic_mobile_development.R
@@ -89,18 +91,24 @@ class PlayFragment : Fragment() {
 
 
 
-                    val imageView = ImageView(requireContext())
-                    val imageReference = storageReference.child("$matchCourt.court.png")
-                    imageReference.downloadUrl.addOnSuccessListener { uri ->
-                        Picasso.get().load(uri).resize(200, 200).into(imageView)
-                        textViewWrapper.addView(imageView)
+
 
 
                         val textView = TextView(requireContext())
-                        textView.text = "Date: $matchDate \n Type: $matchType \n Gender: $matchGender"
+                        textView.text = "$matchDate"
                         textView.textSize = 20f
                         textViewWrapper.addView(textView)
+                    val textView2 = TextView(requireContext())
+                    textView2.text = "$matchType \n $matchGender"
+                    textView2.textSize = 16f
+                    val layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    layoutParams.weight = 1f
+                    textView2.layoutParams = layoutParams
 
+                    joinViewWrapper.addView(textView2)
 
 
                         for (playerId in matchPlayers) {
@@ -108,10 +116,11 @@ class PlayFragment : Fragment() {
 
                             val imageView2 = ImageView(requireContext())
                             val imageReference2 = storageReference.child("$playerId.profile.png")
-                            var imageReference3 = storageReference.child("userProfilePic.jpg") // Standaard referentie naar een standaardafbeelding
+                            var imageReference3 = storageReference.child("userProfilePic.png") // Standaard referentie naar een standaardafbeelding
                             imageReference2.downloadUrl.addOnSuccessListener { uri ->
                                 Picasso.get().load(uri).resize(200, 200).into(imageView2)
                                 playerViewWrapper.addView(imageView2)
+
                             }.addOnFailureListener { exception ->
                                 Log.e("CourtsFragment", "no img")
                                 imageReference3.downloadUrl.addOnSuccessListener { uri ->
@@ -123,11 +132,20 @@ class PlayFragment : Fragment() {
                                 }
                             }
                         }
+                    val numberOfPlayers = matchPlayers.count()
+                    val missingPlayers = 4 - numberOfPlayers // Bereken het aantal ontbrekende spelers
 
-                        val textView2 = TextView(requireContext())
-                        textView2.text = "players : "
-                        textView2.textSize = 20f
-                        playerTextViewWrapper.addView(textView2)
+                    if (numberOfPlayers < 4) {
+                        for (i in 1..missingPlayers) {
+                            val imageView2 = ImageView(requireContext())
+                            // Laad de standaardafbeelding voor ontbrekende spelers
+                            imageView2.setImageResource(R.drawable.add_player)
+                            playerViewWrapper.addView(imageView2)
+                        }
+                    } else {
+                        println("Aantal spelers is 4 of meer, geen ontbrekende iconen weergegeven.")
+                    }
+
 
 
                         val matchRef = firestore.collection("matches").document(matchId)
@@ -156,6 +174,14 @@ class PlayFragment : Fragment() {
                                                 }
                                         }
                                     }
+                                    val rightGravityLayoutParams = LinearLayout.LayoutParams(
+                                        0,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                    )
+                                    rightGravityLayoutParams.weight = 1f
+                                    rightGravityLayoutParams.gravity = Gravity.END // Rechts uitlijnen
+
+                                    joinMatchButton.layoutParams = rightGravityLayoutParams
                                     joinViewWrapper.addView(joinMatchButton)
                                 } else {
                                     Log.d("PlayFragment", "User is already in the match or currentUserID is null")
@@ -163,9 +189,6 @@ class PlayFragment : Fragment() {
                             } else {
                                 Log.e("PlayFragment", "Match document does not exist")
                             }
-                        }.addOnFailureListener { e ->
-                            Log.e("PlayFragment", "Error getting match document", e)
-                        }
 
                         // Voeg XML-divs toe aan de omhullende lineaire lay-out
                         linearLayoutWrapper.addView(textViewWrapper)
@@ -176,6 +199,9 @@ class PlayFragment : Fragment() {
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
                         )
+                            playerViewWrapper.orientation = LinearLayout.HORIZONTAL
+
+                            playerViewWrapper.gravity = Gravity.CENTER_HORIZONTAL
                         marginParams.setMargins(16, 16, 16, 16) // left, top, right, bottom
                         linearLayoutWrapper.layoutParams = marginParams
                         linearLayoutWrapper.setBackgroundResource(R.drawable.border)

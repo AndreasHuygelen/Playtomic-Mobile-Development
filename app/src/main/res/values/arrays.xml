@@ -68,5 +68,40 @@
         <item>Today</item>
         <item>Tomorrow</item>
     </string-array>
+    <string-array name="phone_Number">
+        <item>+1</item> <!-- Verenigde Staten -->
+        <item>+7</item> <!-- Rusland -->
+        <item>+20</item> <!-- Egypte -->
+        <item>+30</item> <!-- Griekenland -->
+        <item>+32</item> <!-- Belgie -->
+        <item>+33</item> <!-- Frankrijk -->
+        <item>+34</item> <!-- Spanje -->
+        <item>+39</item> <!-- Italië -->
+        <item>+41</item> <!-- Zwitserland -->
+        <item>+44</item> <!-- Verenigd Koninkrijk -->
+        <item>+46</item> <!-- Zweden -->
+        <item>+49</item> <!-- Duitsland -->
+        <item>+54</item> <!-- Argentinië -->
+        <item>+55</item> <!-- Brazilië -->
+        <item>+60</item> <!-- Maleisië -->
+        <item>+61</item> <!-- Australië -->
+        <item>+62</item> <!-- Indonesië -->
+        <item>+65</item> <!-- Singapore -->
+        <item>+81</item> <!-- Japan -->
+        <item>+82</item> <!-- Zuid-Korea -->
+        <item>+84</item> <!-- Vietnam -->
+        <item>+86</item> <!-- China -->
+        <item>+91</item> <!-- India -->
+        <item>+92</item> <!-- Pakistan -->
+        <item>+234</item> <!-- Nigeria -->
+        <item>+351</item> <!-- Portugal -->
+        <item>+359</item> <!-- Bulgarije -->
+        <item>+353</item> <!-- Ierland -->
+        <item>+370</item> <!-- Litouwen -->
+        <item>+385</item> <!-- Kroatië -->
+        <item>+506</item> <!-- Costa Rica -->
+        <item>+971</item> <!-- Verenigde Arabische Emiraten -->
+    </string-array>
+
 
 </resources>

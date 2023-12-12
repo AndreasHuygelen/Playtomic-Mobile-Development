@@ -189,6 +189,10 @@ class ProfileFragment : Fragment() {
                     profileViewModel.username.observe(viewLifecycleOwner) {
                         textViewDateOfBirth.text = updatedUser.dateOfBirth
                     }
+                    val textViewDescription: TextView = binding.description
+                    profileViewModel.username.observe(viewLifecycleOwner) {
+                        textViewDescription.text = updatedUser.description
+                    }
 
                     val textBestHand: TextView = binding.bestHand
                     profileViewModel.bestHand.observe(viewLifecycleOwner) {
@@ -224,7 +228,7 @@ class ProfileFragment : Fragment() {
                     }
 
 
-                    var imageReference = storageReference.child("userProfilePic.jpg") // Standaard referentie naar een standaardafbeelding
+                    var imageReference = storageReference.child("userProfilePic.png") // Standaard referentie naar een standaardafbeelding
 
                     val specificImageRef = storageReference.child("${updatedUser.id}.profile.png")
                     val storage =storageReference.child("${updatedUser.id}.profile.png")

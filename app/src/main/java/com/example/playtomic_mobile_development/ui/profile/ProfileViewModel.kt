@@ -42,6 +42,11 @@ class ProfileViewModel : ViewModel() {
         value = "DateOfBirth"
     }
     val textDateOfBirth: LiveData<String> = dateOfBirth
+
+    public val description = MutableLiveData<String>().apply {
+        value = "Description"
+    }
+    val textDescription: LiveData<String> = description
     //--------------------------------- List Matches Followers Followed ----------------------------
     public val matches = MutableLiveData<String>().apply {
         value = "Matches"

@@ -80,7 +80,7 @@ class CreateMatchActivity : AppCompatActivity() {
             val match = court?.let { it1 ->
                 Match(
                     id = matchId,
-                    date = dateMatch.toString() + timeMatch.toString(),
+                    date = "$dateMatch - $timeMatch",
                     players = playersList,
                     court = it1,
                     type = TypeMatch.FRIENDLY,
