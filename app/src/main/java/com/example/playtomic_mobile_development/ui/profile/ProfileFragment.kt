@@ -1,22 +1,18 @@
 package com.example.playtomic_mobile_development.ui.profile
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.ViewSwitcher
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.FragmentProfileBinding
 import com.example.playtomic_mobile_development.model.User
 import com.example.playtomic_mobile_development.model.enum.BestHand
@@ -24,15 +20,14 @@ import com.example.playtomic_mobile_development.model.enum.Gender
 import com.example.playtomic_mobile_development.model.enum.Position
 import com.example.playtomic_mobile_development.model.enum.TimeOfDay
 import com.example.playtomic_mobile_development.model.enum.TypeMatch
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineStart
+
 
 class ProfileFragment : Fragment() {
 
@@ -40,10 +35,16 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
 
+    private lateinit var imageUri: Uri
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
-
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            imageUri = uri
+            uploadImage(imageUri)
+        }
+    }
     override fun onCreateView(
 
         inflater: LayoutInflater,
@@ -252,8 +253,7 @@ class ProfileFragment : Fragment() {
 
                 }
             }.addOnFailureListener { exception ->
-                // Er is een fout opgetreden bij het ophalen van de gebruikersgegevens
-                // Behandel de fout hier
+                Log.e("firebase", exception.toString())
             }
         }
 
@@ -273,7 +273,10 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        binding.editProfilePic.setOnClickListener {
+            openFileChooser()
 
+        }
 
         val textView2: TextView = binding.test2
         profileViewModel.test2.observe(viewLifecycleOwner) {
@@ -283,7 +286,23 @@ class ProfileFragment : Fragment() {
         return root
     }
 
+    private fun openFileChooser() {
+        getContent.launch("image/*")
+    }
 
+    private fun uploadImage(imageUri: Uri) {
+
+        val currentUser: FirebaseUser? = firebaseAuth.currentUser
+        val fileReference = storageReference.child("${currentUser?.uid}.profile.png")
+
+        val uploadTask = fileReference.putFile(imageUri)
+
+        uploadTask.addOnSuccessListener {
+            Toast.makeText(requireContext(), "Profile pic updated", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener { exception ->
+            Log.e("firebase", exception.toString())
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

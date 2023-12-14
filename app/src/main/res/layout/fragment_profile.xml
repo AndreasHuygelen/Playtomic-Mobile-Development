@@ -25,6 +25,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                 <ImageView
                     android:id="@+id/profilePic"
                     android:layout_width="150dp"
@@ -37,6 +45,15 @@
                     app:layout_editor_absoluteY="16dp"
                     tools:src="@tools:sample/avatars" />
 
+                    <TextView
+                        android:id="@+id/editProfilePic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blue_link"
+                        android:textSize="20dp"
+                        android:text="Edit profiel pic"
+                        android:layout_marginStart="16dp" />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
@@ -126,10 +143,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/border"
             android:text="textview"
-            android:textSize="20sp"
+            android:textSize="12sp"
             app:layout_constraintHorizontal_bias="0.531" />
 
             <LinearLayout
@@ -210,9 +229,9 @@
                     android:id="@+id/test2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="16dp"
                     android:text="textview"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
