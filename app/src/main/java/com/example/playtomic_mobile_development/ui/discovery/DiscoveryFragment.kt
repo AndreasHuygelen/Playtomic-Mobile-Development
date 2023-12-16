@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.FragmentDiscoveryBinding
 import com.example.playtomic_mobile_development.model.Court
 import com.example.playtomic_mobile_development.ui.play.CreateBookingActivity
@@ -61,11 +62,23 @@ class DiscoveryFragment : Fragment() {
                     val linearLayout = LinearLayout(requireContext())
                     linearLayout.orientation = LinearLayout.VERTICAL
 
+
+                    val textViewWrapper = LinearLayout(requireContext())
+                    textViewWrapper.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+
+                    val joinViewWrapper = LinearLayout(requireContext())
+                    joinViewWrapper.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+
                     val textView = TextView(requireContext())
                     textView.text = "Name: $courtName \n Address: $courtLocation \n City: $courtCity"
                     textView.textSize = 20f
 
-                    linearLayout.addView(textView)
 
                     val imageView = ImageView(requireContext())
                     val imageReference = storageReference.child("$courtId.court.png")
@@ -73,7 +86,7 @@ class DiscoveryFragment : Fragment() {
                     imageReference.downloadUrl.addOnSuccessListener { uri ->
                         Picasso.get().load(uri).resize(200, 200).into(imageView)
 
-                        linearLayout.addView(imageView)
+                        textViewWrapper.addView(imageView)
                         val button = Button(requireContext())
                         button.text = "Create Match"
                         button.setOnClickListener {
@@ -89,10 +102,30 @@ class DiscoveryFragment : Fragment() {
                             startActivity(intent)
                         }
 
-                        // Voeg de knop toe aan het LinearLayout
-                        linearLayout.addView(button)
-                        linearLayout.addView(buttonBook)
+
+                        val rightGravityLayoutParams = LinearLayout.LayoutParams(
+                            0,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        rightGravityLayoutParams.weight = 1f
+                        rightGravityLayoutParams.gravity = Gravity.END
+
+                        buttonBook.layoutParams = rightGravityLayoutParams
+                        joinViewWrapper.addView(button)
+                        joinViewWrapper.addView(buttonBook)
+                        textViewWrapper.addView(textView)
+                        linearLayout.addView(textViewWrapper)
+                        linearLayout.addView(joinViewWrapper)
+
                         binding.courtsLayout.addView(linearLayout)
+
+                        val marginParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        marginParams.setMargins(16, 16, 16, 16)
+                        linearLayout.layoutParams = marginParams
+                        linearLayout.setBackgroundResource(R.drawable.border)
                     }.addOnFailureListener { exception ->
                         Log.e("CourtsFragment", "Error loading image for court $courtId", exception)
                     }

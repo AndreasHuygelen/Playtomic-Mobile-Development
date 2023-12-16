@@ -1,5 +1,6 @@
 package com.example.playtomic_mobile_development.ui.play
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,8 +17,10 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.playtomic_mobile_development.MainActivity
 import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.FragmentPlayBinding
+import com.example.playtomic_mobile_development.model.User
 import com.example.playtomic_mobile_development.ui.profile.EditProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,6 +51,8 @@ class PlayFragment : Fragment() {
         storageReference = FirebaseStorage.getInstance().reference
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+        val userId = currentUser?.uid
 
         firestore.collection("matches").get()
             .addOnSuccessListener { documents ->
@@ -59,11 +64,15 @@ class PlayFragment : Fragment() {
                     val matchCourt = document.getString("court") ?: ""
                     var matchPlayers = document.get("players") as? List<String> ?: listOf()
 
-                    // Omhullende div voor lineaire lay-out
                     val linearLayoutWrapper = LinearLayout(requireContext())
                     linearLayoutWrapper.orientation = LinearLayout.VERTICAL
 
-                    // Eerste XML-div voor tekstweergave
+                    val courtViewWrapper = LinearLayout(requireContext())
+                    courtViewWrapper.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+
                     val textViewWrapper = LinearLayout(requireContext())
                     textViewWrapper.layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -82,7 +91,6 @@ class PlayFragment : Fragment() {
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
 
-                    // Tweede XML-div voor afbeeldingweergave
                     val playerViewWrapper = LinearLayout(requireContext())
                     playerViewWrapper.layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -90,14 +98,11 @@ class PlayFragment : Fragment() {
                     )
 
 
+                    val textView = TextView(requireContext())
+                    textView.text = "$matchDate"
+                    textView.textSize = 20f
+                    textViewWrapper.addView(textView)
 
-
-
-
-                        val textView = TextView(requireContext())
-                        textView.text = "$matchDate"
-                        textView.textSize = 20f
-                        textViewWrapper.addView(textView)
                     val textView2 = TextView(requireContext())
                     textView2.text = "$matchType \n $matchGender"
                     textView2.textSize = 16f
@@ -105,46 +110,24 @@ class PlayFragment : Fragment() {
                         0,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
+
+
+
                     layoutParams.weight = 1f
                     textView2.layoutParams = layoutParams
 
                     joinViewWrapper.addView(textView2)
 
 
-                        for (playerId in matchPlayers) {
-                            Log.d("PlayFragment", "Player ID: $playerId")
 
-                            val imageView2 = ImageView(requireContext())
-                            val imageReference2 = storageReference.child("$playerId.profile.png")
-                            var imageReference3 = storageReference.child("userProfilePic.png") // Standaard referentie naar een standaardafbeelding
-                            imageReference2.downloadUrl.addOnSuccessListener { uri ->
-                                Picasso.get().load(uri).resize(200, 200).into(imageView2)
-                                playerViewWrapper.addView(imageView2)
+                    court(matchCourt, courtViewWrapper)
 
-                            }.addOnFailureListener { exception ->
-                                Log.e("CourtsFragment", "no img")
-                                imageReference3.downloadUrl.addOnSuccessListener { uri ->
-                                    Picasso.get().load(uri).resize(200, 200).into(imageView2)
-                                    playerViewWrapper.addView(imageView2)
-                                }.addOnFailureListener { exception ->
-                                    Log.e("CourtsFragment", "Error loading image for court ", exception)
+                    players(matchPlayers, playerViewWrapper)
 
-                                }
-                            }
-                        }
-                    val numberOfPlayers = matchPlayers.count()
-                    val missingPlayers = 4 - numberOfPlayers // Bereken het aantal ontbrekende spelers
+                    noPlayers(matchPlayers, playerViewWrapper)
 
-                    if (numberOfPlayers < 4) {
-                        for (i in 1..missingPlayers) {
-                            val imageView2 = ImageView(requireContext())
-                            // Laad de standaardafbeelding voor ontbrekende spelers
-                            imageView2.setImageResource(R.drawable.add_player)
-                            playerViewWrapper.addView(imageView2)
-                        }
-                    } else {
-                        println("Aantal spelers is 4 of meer, geen ontbrekende iconen weergegeven.")
-                    }
+
+
 
 
 
@@ -167,7 +150,53 @@ class PlayFragment : Fragment() {
                                                 .addOnSuccessListener {
                                                     Log.d("PlayFragment", "User added to match: $matchId")
                                                     Toast.makeText(requireContext(), "You joined the match", Toast.LENGTH_SHORT).show()
-                                                    joinViewWrapper.removeView(joinMatchButton) // Verwijder de knop nadat de gebruiker is toegevoegd
+                                                    joinViewWrapper.removeView(joinMatchButton)
+                                                    currentUser?.let{
+                                                        val userDocRef = userId?.let { it1 ->
+                                                            firestore.collection("users").document(
+                                                                it1
+                                                            )
+                                                        }
+                                                        userDocRef?.get()?.addOnSuccessListener { documentSnapshot ->
+                                                            if (documentSnapshot.exists()) {
+                                                                val user = documentSnapshot.toObject(
+                                                                    User::class.java)
+
+                                                                val updatedUser = user?.let { user ->
+                                                                    User(
+                                                                        id = user.id,
+                                                                        userName = user.userName,
+                                                                        firstName = user.firstName,
+                                                                        lastName = user.lastName,
+                                                                        email = user.email,
+                                                                        phoneNumber = user.phoneNumber,
+                                                                        gender = user.gender,
+                                                                        dateOfBirth = user.dateOfBirth,
+                                                                        description = user.description,
+                                                                        amountOfMatches = user.amountOfMatches+1,
+                                                                        bestHand = user.bestHand,
+                                                                        position = user.position,
+                                                                        typeMatch = user.typeMatch,
+                                                                        timeOfDay = user.timeOfDay
+
+                                                                    )
+                                                                }
+                                                                if (updatedUser != null) {
+                                                                    userDocRef.set(updatedUser)
+                                                                        .addOnSuccessListener {
+                                                                            Log.d("PlayFragment", "match made")
+
+                                                                        }
+                                                                        .addOnFailureListener { exception ->
+                                                                            Log.d("PlayFragment", exception.message, exception)
+                                                                        }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }?.addOnFailureListener { exception ->
+                                                        Log.d("PlayFragment","current user not found", exception)
+                                                    }
                                                 }
                                                 .addOnFailureListener { e ->
                                                     Log.e("PlayFragment", "Error updating match document", e)
@@ -190,7 +219,8 @@ class PlayFragment : Fragment() {
                                 Log.e("PlayFragment", "Match document does not exist")
                             }
 
-                        // Voeg XML-divs toe aan de omhullende lineaire lay-out
+
+                            linearLayoutWrapper.addView(courtViewWrapper)
                         linearLayoutWrapper.addView(textViewWrapper)
                         linearLayoutWrapper.addView(playerTextViewWrapper)
                         linearLayoutWrapper.addView(playerViewWrapper)
@@ -202,23 +232,112 @@ class PlayFragment : Fragment() {
                             playerViewWrapper.orientation = LinearLayout.HORIZONTAL
 
                             playerViewWrapper.gravity = Gravity.CENTER_HORIZONTAL
-                        marginParams.setMargins(16, 16, 16, 16) // left, top, right, bottom
+                        marginParams.setMargins(16, 16, 16, 16)
                         linearLayoutWrapper.layoutParams = marginParams
                         linearLayoutWrapper.setBackgroundResource(R.drawable.border)
 
 
-                        // Voeg de omhullende lineaire lay-out toe aan de hoofdindeling
                         binding?.courtsLayout?.addView(linearLayoutWrapper)
                     }.addOnFailureListener { exception ->
-                        Log.e("CourtsFragment", "Error loading image for court $matchCourt", exception)
+                        Log.e("Playfragment", "Error loading image for court $matchCourt", exception)
                     }
                 }
             }
             .addOnFailureListener { exception ->
-                Log.e("CourtsFragment", "Error getting courts", exception)
+                Log.e("Playfragment", "Error getting courts", exception)
             }
 
         return root
+    }
+
+    private fun court(matchCourt:String, courtViewWrapper: LinearLayout){
+        val textView4 = TextView(requireContext())
+        textView4.textSize = 20f
+
+
+        val courtsCollection = firestore.collection("courts")
+        val courtDocument = courtsCollection.document(matchCourt)
+
+        courtDocument.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                val courtName = documentSnapshot.getString("name")
+
+                textView4.text = "$courtName"
+                courtViewWrapper.addView(textView4)
+            } else {
+                Log.e("Playfragment", "Court not found")
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Playfragment", "error : ${exception.message}")
+        }
+    }
+
+    private fun players (matchPlayers:List<String>, playerViewWrapper :LinearLayout){
+        for (playerId in matchPlayers) {
+            Log.d("PlayFragment", "Player ID: $playerId")
+
+            val imageView2 = ImageView(requireContext())
+
+            val imageReference2 = storageReference.child("$playerId.profile.png")
+            var imageReference3 = storageReference.child("userProfilePic.png") // Standaard referentie naar een standaardafbeelding
+            imageReference2.downloadUrl.addOnSuccessListener { uri ->
+                Picasso.get().load(uri).resize(200, 200).into(imageView2)
+                playerViewWrapper.addView(imageView2)
+
+            }.addOnFailureListener { exception ->
+                Log.e("Playfragment", "no img")
+                imageReference3.downloadUrl.addOnSuccessListener { uri ->
+                    Picasso.get().load(uri).resize(200, 200).into(imageView2)
+                    playerViewWrapper.addView(imageView2)
+                }.addOnFailureListener { exception ->
+                    Log.e("Playfragment", "Error loading image for court ", exception)
+
+                }
+            }
+
+            imageView2.setOnClickListener {
+                val usersCollection = firestore.collection("users")
+                val userDocument = usersCollection.document(playerId)
+
+                userDocument.get().addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        val username = documentSnapshot.getString("userName")
+
+                        username?.let { playerName ->
+                            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+                            alertDialogBuilder.setTitle("User")
+                            alertDialogBuilder.setMessage("UserName: $playerName")
+
+                            alertDialogBuilder.setPositiveButton("OK") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+
+                            val alertDialog = alertDialogBuilder.create()
+                            alertDialog.show()
+                        }
+                    } else {
+                        Log.e("Playfragment", "user not found")
+                    }
+                }.addOnFailureListener { exception ->
+                    Log.e("Playfragment", "error: ${exception.message}")
+                }
+            }
+
+
+        }
+    }
+    private fun noPlayers(matchPlayers:List<String>, playerViewWrapper:LinearLayout){
+        val numberOfPlayers = matchPlayers.count()
+        val missingPlayers = 4 - numberOfPlayers
+        if (numberOfPlayers < 4) {
+            for (i in 1..missingPlayers) {
+                val imageView2 = ImageView(requireContext())
+                imageView2.setImageResource(R.drawable.add_player)
+                playerViewWrapper.addView(imageView2)
+            }
+        } else {
+            println("Amount of players is 4")
+        }
     }
 
     override fun onDestroyView() {
