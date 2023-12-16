@@ -55,6 +55,9 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("org.osmdroid:osmdroid-android:6.1.17")
+    implementation ("org.osmdroid:osmdroid-mapsforge:6.1.10")
+    implementation("com.beust:klaxon:5.4")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

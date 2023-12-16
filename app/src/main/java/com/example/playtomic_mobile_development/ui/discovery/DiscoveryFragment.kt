@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.FragmentDiscoveryBinding
 import com.example.playtomic_mobile_development.model.Court
+import com.example.playtomic_mobile_development.ui.community.MapActivity
 import com.example.playtomic_mobile_development.ui.play.CreateBookingActivity
 import com.example.playtomic_mobile_development.ui.play.CreateMatchActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -58,6 +59,8 @@ class DiscoveryFragment : Fragment() {
                     val courtName = document.getString("name") ?: ""
                     val courtLocation = document.getString("location") ?: ""
                     val courtCity = document.getString("city") ?: ""
+                    val courtLat = document.getDouble("lat") ?: ""
+                    val courtLong = document.getDouble("long") ?: ""
 
                     val linearLayout = LinearLayout(requireContext())
                     linearLayout.orientation = LinearLayout.VERTICAL
@@ -101,6 +104,14 @@ class DiscoveryFragment : Fragment() {
                             intent.putExtra("court", courtId)
                             startActivity(intent)
                         }
+                        val buttonMap = Button(requireContext())
+                        buttonMap.text = "Map"
+                        buttonMap.setOnClickListener {
+                            val intent = Intent(requireContext(), MapActivity::class.java)
+                            intent.putExtra("lat", courtLat)
+                            intent.putExtra("long", courtLong)
+                            startActivity(intent)
+                        }
 
 
                         val rightGravityLayoutParams = LinearLayout.LayoutParams(
@@ -113,6 +124,7 @@ class DiscoveryFragment : Fragment() {
                         buttonBook.layoutParams = rightGravityLayoutParams
                         joinViewWrapper.addView(button)
                         joinViewWrapper.addView(buttonBook)
+                        joinViewWrapper.addView(buttonMap)
                         textViewWrapper.addView(textView)
                         linearLayout.addView(textViewWrapper)
                         linearLayout.addView(joinViewWrapper)

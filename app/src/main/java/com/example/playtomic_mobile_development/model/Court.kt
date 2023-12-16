@@ -5,4 +5,6 @@ data class Court (
     var name: String,
     var location: String,
     var city: String,
+    var long: String,
+    var lat: String,
 )
