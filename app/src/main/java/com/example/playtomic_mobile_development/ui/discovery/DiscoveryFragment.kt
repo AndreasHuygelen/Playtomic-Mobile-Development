@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomic_mobile_development.databinding.FragmentDiscoveryBinding
 import com.example.playtomic_mobile_development.model.Court
+import com.example.playtomic_mobile_development.ui.play.CreateBookingActivity
 import com.example.playtomic_mobile_development.ui.play.CreateMatchActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -80,9 +81,17 @@ class DiscoveryFragment : Fragment() {
                             intent.putExtra("court", courtId)
                             startActivity(intent)
                         }
+                        val buttonBook = Button(requireContext())
+                        buttonBook.text = "Book the court"
+                        buttonBook.setOnClickListener {
+                            val intent = Intent(requireContext(), CreateBookingActivity::class.java)
+                            intent.putExtra("court", courtId)
+                            startActivity(intent)
+                        }
 
                         // Voeg de knop toe aan het LinearLayout
                         linearLayout.addView(button)
+                        linearLayout.addView(buttonBook)
                         binding.courtsLayout.addView(linearLayout)
                     }.addOnFailureListener { exception ->
                         Log.e("CourtsFragment", "Error loading image for court $courtId", exception)
