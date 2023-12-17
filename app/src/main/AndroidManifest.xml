@@ -17,6 +17,12 @@
         android:theme="@style/Theme.AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.courts.YourMatchesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.courts.BookedCourtsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.community.MapActivity"
             android:exported="false" />
         <activity

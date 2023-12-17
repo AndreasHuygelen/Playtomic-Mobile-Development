@@ -16,6 +16,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.playtomic_mobile_development.databinding.ActivityMainBinding
 import com.example.playtomic_mobile_development.databinding.ToolbarBinding
 import com.example.playtomic_mobile_development.ui.community.MapActivity
+import com.example.playtomic_mobile_development.ui.courts.BookedCourtsActivity
+import com.example.playtomic_mobile_development.ui.courts.YourMatchesActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,8 +64,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SignInActivity::class.java))
             finish()
         }
-        else if (R.id.map == item.itemId){
-            startActivity(Intent(this, MapActivity::class.java))
+        else if (R.id.booked == item.itemId){
+            startActivity(Intent(this, BookedCourtsActivity::class.java))
+            finish()
+        }
+        else if (R.id.match == item.itemId){
+            startActivity(Intent(this, YourMatchesActivity::class.java))
             finish()
         }
         return super.onOptionsItemSelected(item)

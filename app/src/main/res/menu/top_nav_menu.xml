@@ -6,8 +6,11 @@
         android:id="@+id/signout"
         android:title="Logout"/>
     <item
-        android:id="@+id/map"
-        android:title="Map"/>
+        android:id="@+id/booked"
+        android:title="Courts booked"/>
+    <item
+        android:id="@+id/match"
+        android:title="Your matches"/>
     <item
         android:id="@+id/btnSettings"
         android:title="Settings"/>
