@@ -1,6 +1,7 @@
 package com.example.playtomic_mobile_development.ui.courts
 
 import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +10,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.playtomic_mobile_development.MainActivity
 import com.example.playtomic_mobile_development.R
 import com.example.playtomic_mobile_development.databinding.ActivityCreateProfileBinding
 import com.example.playtomic_mobile_development.databinding.ActivityYourMatchesBinding
 import com.example.playtomic_mobile_development.databinding.FragmentPlayBinding
+import com.example.playtomic_mobile_development.ui.community.MapActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -27,7 +30,6 @@ class YourMatchesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_your_matches)
         storageReference = FirebaseStorage.getInstance().reference
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
@@ -35,6 +37,11 @@ class YourMatchesActivity : AppCompatActivity() {
         val userId = currentUser?.uid
         binding = ActivityYourMatchesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.buttonBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         if (userId != null) {
             firestore.collection("matches")
@@ -153,16 +160,16 @@ class YourMatchesActivity : AppCompatActivity() {
                 textView4.text = "$courtName"
                 courtViewWrapper.addView(textView4)
             } else {
-                Log.e("Playfragment", "Court not found")
+                Log.e("YourMatchesActivity", "Court not found")
             }
         }.addOnFailureListener { exception ->
-            Log.e("Playfragment", "error 123: ${exception.message}")
+            Log.e("YourMatchesActivity", "error 123: ${exception.message}")
         }
     }
 
     private fun players (matchPlayers:List<String>, playerViewWrapper :LinearLayout){
         for (playerId in matchPlayers) {
-            Log.d("PlayFragment", "Player ID: $playerId")
+            Log.d("YourMatchesActivity", "Player ID: $playerId")
 
             val imageView2 = ImageView(this)
 
@@ -173,12 +180,12 @@ class YourMatchesActivity : AppCompatActivity() {
                 playerViewWrapper.addView(imageView2)
 
             }.addOnFailureListener { exception ->
-                Log.e("Playfragment", "no img")
+                Log.e("YourMatchesActivity", "no img")
                 imageReference3.downloadUrl.addOnSuccessListener { uri ->
                     Picasso.get().load(uri).resize(200, 200).into(imageView2)
                     playerViewWrapper.addView(imageView2)
                 }.addOnFailureListener { exception ->
-                    Log.e("Playfragment", "Error loading image for court 123", exception)
+                    Log.e("YourMatchesActivity", "Error loading image for court 123", exception)
 
                 }
             }
@@ -204,10 +211,10 @@ class YourMatchesActivity : AppCompatActivity() {
                             alertDialog.show()
                         }
                     } else {
-                        Log.e("Playfragment", "user not found")
+                        Log.e("YourMatchesActivity", "user not found")
                     }
                 }.addOnFailureListener { exception ->
-                    Log.e("Playfragment", "error 123: ${exception.message}")
+                    Log.e("YourMatchesActivity", "error 123: ${exception.message}")
                 }
             }
 
